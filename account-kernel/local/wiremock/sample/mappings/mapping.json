@@ -1,0 +1,80 @@
+{
+    "mappings":
+    [
+        {
+            "scenarioName": "Get Nome - 00000000000",
+            "request":
+            {
+                "method": "GET",
+                "url": "/person/document/00000000000"
+            },
+            "response":
+            {
+                "status": 200,
+                "headers":
+                {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody":
+                [
+                    {
+                        "id": 1,
+                        "nome": "Exemplo 00 da Silva",
+                        "document": "00000000000",
+                        "document_type": "cpf"
+                    }
+                ]
+            }
+        },
+        {
+            "scenarioName": "Get Nome - 00000000001",
+            "request":
+            {
+                "method": "GET",
+                "url": "/person/document/00000000001"
+            },
+            "response":
+            {
+                "status": 200,
+                "headers":
+                {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody":
+                [
+                    {
+                        "id": 1,
+                        "nome": "Exemplo 01 da Silva",
+                        "document": "00000000001",
+                        "document_type": "cpf"
+                    }
+                ]
+            }
+        },
+        {
+            "scenarioName": "Get Nome - 00000000002",
+            "request":
+            {
+                "method": "GET",
+                "url": "/person/document/00000000002"
+            },
+            "response":
+            {
+                "status": 200,
+                "headers":
+                {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody":
+                [
+                    {
+                        "id": 1,
+                        "nome": "Exemplo 02 da Silva",
+                        "document": "00000000002",
+                        "document_type": "cpf"
+                    }
+                ]
+            }
+        }
+    ]
+}

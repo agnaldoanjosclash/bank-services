@@ -1,0 +1,4 @@
+server:
+  port: ${PORT:8070}
+client:
+  kafka-host: ${KAFKA_HOST:kafka:9092}

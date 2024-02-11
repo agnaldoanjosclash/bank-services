@@ -1,0 +1,25 @@
+{
+    "mappings":
+    [
+        {
+            "scenarioName": "Registro de transferências",
+            "request":
+            {
+                "method": "POST",
+                "url": "/bacen/registro/transferencias"
+            },
+            "response":
+            {
+                "status": 201,
+                "headers":
+                {
+                    "Content-Type": "application/json"
+                },
+                "jsonBody":
+                    {
+                        "description": "Registro aceito com sucesso"
+                    }
+            }
+        }
+    ]
+}

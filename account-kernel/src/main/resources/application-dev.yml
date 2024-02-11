@@ -1,0 +1,2 @@
+client:
+  kafka-host: localhost:29092
