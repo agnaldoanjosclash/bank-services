@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "49f74c0f-43a1-4637-8458-00d940472360",
+		"name": "sample-bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21354146"
+	},
+	"item": [
+		{
+			"name": "mock",
+			"item": [
+				{
+					"name": "Cadastro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:48080/person/document/:document/type/:type",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "48080",
+							"path": [
+								"person",
+								"document",
+								":document",
+								"type",
+								":type"
+							],
+							"variable": [
+								{
+									"key": "document",
+									"value": "00000000001"
+								},
+								{
+									"key": "type",
+									"value": "cpf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bacen",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"teste\": \"json nada haver para teste\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:58080/bacen/registro/transferencias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "58080",
+							"path": [
+								"bacen",
+								"registro",
+								"transferencias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "kernel",
+			"item": [
+				{
+					"name": "Account Balance - 00000000001",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/kernel/account/:number/agency/:agency/clientDocument/:clientDocument/typeDocument/:typeDocument/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"kernel",
+								"account",
+								":number",
+								"agency",
+								":agency",
+								"clientDocument",
+								":clientDocument",
+								"typeDocument",
+								":typeDocument",
+								"balance"
+							],
+							"variable": [
+								{
+									"key": "number",
+									"value": "1000001"
+								},
+								{
+									"key": "agency",
+									"value": "0099"
+								},
+								{
+									"key": "clientDocument",
+									"value": "00000000001"
+								},
+								{
+									"key": "typeDocument",
+									"value": "CPF"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Details - 00000000001",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/kernel/account/:number/agency/:agency/clientDocument/:clientDocument/typeDocument/:typeDocument/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"kernel",
+								"account",
+								":number",
+								"agency",
+								":agency",
+								"clientDocument",
+								":clientDocument",
+								"typeDocument",
+								":typeDocument",
+								"details"
+							],
+							"variable": [
+								{
+									"key": "number",
+									"value": "1000001"
+								},
+								{
+									"key": "agency",
+									"value": "0099"
+								},
+								{
+									"key": "clientDocument",
+									"value": "00000000001"
+								},
+								{
+									"key": "typeDocument",
+									"value": "CPF"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Details - 00000000002",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/kernel/account/:number/agency/:agency/clientDocument/:clientDocument/typeDocument/:typeDocument/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"kernel",
+								"account",
+								":number",
+								"agency",
+								":agency",
+								"clientDocument",
+								":clientDocument",
+								"typeDocument",
+								":typeDocument",
+								"details"
+							],
+							"variable": [
+								{
+									"key": "number",
+									"value": "3000001"
+								},
+								{
+									"key": "agency",
+									"value": "0105"
+								},
+								{
+									"key": "clientDocument",
+									"value": "00000000002"
+								},
+								{
+									"key": "typeDocument",
+									"value": "CPF"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Details - 00000000000",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/kernel/account/:number/agency/:agency/clientDocument/:clientDocument/typeDocument/:typeDocument/details",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"kernel",
+								"account",
+								":number",
+								"agency",
+								":agency",
+								"clientDocument",
+								":clientDocument",
+								"typeDocument",
+								":typeDocument",
+								"details"
+							],
+							"variable": [
+								{
+									"key": "number",
+									"value": "1000002"
+								},
+								{
+									"key": "agency",
+									"value": "0099"
+								},
+								{
+									"key": "clientDocument",
+									"value": "00000000000"
+								},
+								{
+									"key": "typeDocument",
+									"value": "CPF"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Transfer - 00000000001",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"8FC2E426-59A0-4FAE-B0D2-53862F483048\",\r\n    \"sourceAccount\": {\r\n        \"agency\": \"0099\",\r\n        \"accountNumber\": \"1000001\",\r\n        \"clientDocument\": \"00000000001\",\r\n        \"documentType\": \"CPF\"\r\n    },\r\n    \"targetAccount\": {\r\n        \"agency\": \"0105\",\r\n        \"accountNumber\": \"3000001\",\r\n        \"clientDocument\": \"00000000002\",\r\n        \"documentType\": \"CPF\"\r\n    },\r\n    \"value\": 300,\r\n    \"operationType\": \"TRANSFER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/kernel/account/transfer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"kernel",
+								"account",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Transfer - 00000000000",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"FAD72548-50A4-4270-8314-10733585EDF7\",\r\n    \"sourceAccount\": {\r\n        \"agency\": \"0099\",\r\n        \"accountNumber\": \"1000002\",\r\n        \"clientDocument\": \"00000000000\",\r\n        \"documentType\": \"CPF\"\r\n    },\r\n    \"targetAccount\": {\r\n        \"agency\": \"0105\",\r\n        \"accountNumber\": \"3000001\",\r\n        \"clientDocument\": \"00000000002\",\r\n        \"documentType\": \"CPF\"\r\n    },\r\n    \"value\": 300,\r\n    \"operationType\": \"TRANSFER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8090/kernel/account/transfer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"kernel",
+								"account",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Account Transfer - 00000000001",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"transactionId\": \"A76033B68DF54351B4120E8ACD64202E\",\r\n    \"sourceAccount\": {\r\n        \"agency\": \"0099\",\r\n        \"accountNumber\": \"1000001\",\r\n        \"clientDocument\": \"00000000001\",\r\n        \"documentType\": \"CPF\"\r\n    },\r\n    \"targetAccount\": {\r\n        \"agency\": \"0105\",\r\n        \"accountNumber\": \"3000001\",\r\n        \"clientDocument\": \"00000000002\",\r\n        \"documentType\": \"CPF\"\r\n    },\r\n    \"value\": 300,\r\n    \"operationType\": \"TRANSFER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8070/api/account/transfer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"account",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
