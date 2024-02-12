@@ -71,7 +71,7 @@ public class AccountControllerTest {
     void whenDetailsNotFound_thenReturnsNotFound() throws Exception {
         when(registerDataService.findAccountDetails(any(), any(), any(), any())).thenReturn(null);
 
-        mockMvc.perform(get("/kernel/account/{number}/agency/{agency}/clientDocument/{clientDocument}/typeDocument/{typeDocument}/details",
+        mockMvc.perform(get("/api/account/{number}/agency/{agency}/clientDocument/{clientDocument}/typeDocument/{typeDocument}/details",
                         "999", "999", "00000000000", "CPF"))
                 .andExpect(status().isNotFound());
     }

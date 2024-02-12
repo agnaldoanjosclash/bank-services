@@ -41,7 +41,8 @@ public class AccountController {
                 DocumentType.valueOf(tipoDocumento.toUpperCase())
         );
 
-        return ResponseEntity.ok(accountDetails);
+        return accountDetails != null ? ResponseEntity.ok(accountDetails) :
+                ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping("/{number}/agency/{agency}/clientDocument/{clientDocument}/typeDocument/{typeDocument}/balance")
