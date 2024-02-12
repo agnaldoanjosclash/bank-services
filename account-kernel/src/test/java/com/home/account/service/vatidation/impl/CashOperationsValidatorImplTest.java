@@ -7,6 +7,7 @@ import com.home.account.data.enums.DocumentType;
 import com.home.account.data.model.Account;
 import com.home.account.repository.AccountRepository;
 import com.home.account.service.vatidation.CashOperationsValidation;
+import com.home.account.service.vatidation.CashOperationsValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,7 +27,7 @@ class CashOperationsValidatorImplTest {
     @Mock
     private AccountRepository accountRepository;
 
-    private CashOperationsValidatorImpl validator;
+    private CashOperationsValidator validator;
 
     private Account sourceAccount, targetAccount;
     private TransferRequestDTO transferRequestDTO;

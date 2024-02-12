@@ -2,7 +2,7 @@ package com.home.account.service.impl;
 
 import com.home.account.config.CacheConfiguration;
 import com.home.account.config.KafkaConfiguration;
-import com.home.account.data.dto.RegistrationResquestDTO;
+import com.home.account.data.dto.RegistrationResponseDTO;
 import com.home.account.data.dto.TransferResponseDTO;
 import com.home.account.data.enums.DocumentType;
 import com.home.account.data.model.Client;
@@ -39,7 +39,7 @@ public class ExternalIntegrationServiceImpl implements ExternalIntegrationServic
     @Override
     @Cacheable(value = CacheConfiguration.CLIENT_CACHE , key="{#document, #type}")
     @CircuitBreaker(name="registry-circuit-breaker", fallbackMethod = "fallbackMethod")
-    public RegistrationResquestDTO findClientDetails(String document, String type) {
+    public RegistrationResponseDTO findClientDetails(String document, String type) {
 
         var clientCache =  clientRepository.findByDocument(document);
 
@@ -47,17 +47,17 @@ public class ExternalIntegrationServiceImpl implements ExternalIntegrationServic
             return clientCache.toDTO();
         }
 
-        ResponseEntity<RegistrationResquestDTO> personResponse = personClient.persons(document, type.toLowerCase());
+        ResponseEntity<RegistrationResponseDTO> personResponse = personClient.persons(document, type.toLowerCase());
         if (!personResponse.getStatusCode().is2xxSuccessful()) {
             return null;
         }
 
-        RegistrationResquestDTO registrationResquestDTO = personResponse.getBody();
-        if (registrationResquestDTO != null) {
-            saveClientCache(registrationResquestDTO);
+        RegistrationResponseDTO registrationResponseDTO = personResponse.getBody();
+        if (registrationResponseDTO != null) {
+            saveClientCache(registrationResponseDTO);
         }
 
-        return registrationResquestDTO;
+        return registrationResponseDTO;
     }
 
     @Override
@@ -70,24 +70,24 @@ public class ExternalIntegrationServiceImpl implements ExternalIntegrationServic
         return true;
     }
 
-    private void saveClientCache(RegistrationResquestDTO registrationResquestDTO) {
+    private void saveClientCache(RegistrationResponseDTO registrationResponseDTO) {
         var versionCache = versionRepository.findAllByActive("A").stream()
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Active version not found"));
 
         Client client = Client.builder()
-                .name(registrationResquestDTO.getName())
-                .document(registrationResquestDTO.getDocument())
-                .documentType(DocumentType.valueOf(registrationResquestDTO.getDocumentType().toUpperCase()))
+                .name(registrationResponseDTO.getName())
+                .document(registrationResponseDTO.getDocument())
+                .documentType(DocumentType.valueOf(registrationResponseDTO.getDocumentType().toUpperCase()))
                 .version(versionCache)
                 .build();
 
         clientRepository.save(client);
     }
 
-    public RegistrationResquestDTO fallbackMethod(Exception e) {
+    public RegistrationResponseDTO fallbackMethod(Exception e) {
         log.error("Errors occurred during execution.", e);
-        return RegistrationResquestDTO.builder()
+        return RegistrationResponseDTO.builder()
                 .name("Service Unavailable")
                 .document("00000000000")
                 .documentType("")

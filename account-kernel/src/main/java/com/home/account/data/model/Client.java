@@ -1,6 +1,6 @@
 package com.home.account.data.model;
 
-import com.home.account.data.dto.RegistrationResquestDTO;
+import com.home.account.data.dto.RegistrationResponseDTO;
 import com.home.account.data.enums.DocumentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,8 +47,8 @@ public class Client {
     @JoinColumn(name = "version", referencedColumnName = "version")
     private Version version;
 
-    public RegistrationResquestDTO toDTO() {
-        return RegistrationResquestDTO.builder()
+    public RegistrationResponseDTO toDTO() {
+        return RegistrationResponseDTO.builder()
                 .name(this.name)
                 .document(this.document)
                 .documentType(this.documentType.toString().toLowerCase())

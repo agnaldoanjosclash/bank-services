@@ -1,6 +1,5 @@
 package com.home.account.integration;
 
-import com.home.account.data.dto.RegistrationResquestDTO;
 import com.home.account.data.dto.TransferResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

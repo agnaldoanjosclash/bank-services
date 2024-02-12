@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="API - AccountApplication" type="Application" factoryName="Application">
+  <configuration default="false" name="Run local" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.home.account.AccountApplication" />
     <module name="account" />
     <option name="VM_PARAMETERS" value="-Dspring.profiles.active=dev" />

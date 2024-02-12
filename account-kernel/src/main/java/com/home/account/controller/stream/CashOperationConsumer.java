@@ -19,6 +19,7 @@ public class CashOperationConsumer {
             groupId = KafkaConfiguration.CONSUMER_GROUP,
             containerFactory="kafkaListenerContainerFactory")
     public void consume(final TransferRequestDTO transferRequestDTO) {
+        log.info("Consuming message from topic: {}", transferRequestDTO);
         cashOperationsService.transfer(transferRequestDTO);
     }
 

@@ -2,7 +2,7 @@ package com.home.account.service.impl;
 
 import com.home.account.data.dto.AccountRequestDTO;
 import com.home.account.data.dto.MessageResponseDTO;
-import com.home.account.data.dto.RegistrationResquestDTO;
+import com.home.account.data.dto.RegistrationResponseDTO;
 import com.home.account.data.dto.TransferRequestDTO;
 import com.home.account.data.enums.AccountStatus;
 import com.home.account.data.enums.DocumentType;
@@ -14,6 +14,7 @@ import com.home.account.data.model.Transaction;
 import com.home.account.repository.AccountRepository;
 import com.home.account.repository.OperationRepository;
 import com.home.account.repository.TransactionRepository;
+import com.home.account.service.CashOperationsService;
 import com.home.account.service.ExternalIntegrationService;
 import com.home.account.service.vatidation.CashOperationsValidation;
 import com.home.account.service.vatidation.CashOperationsValidator;
@@ -53,7 +54,7 @@ public class CashOperationsServiceImplTest {
     private CashOperationsValidator cashOperationsValidator;
 
 
-    private CashOperationsServiceImpl service;
+    private CashOperationsService service;
 
 
     @BeforeEach
@@ -108,7 +109,7 @@ public class CashOperationsServiceImplTest {
                         .build(),
                 true, "Validations performed successfully."
         );
-        var client = RegistrationResquestDTO.builder()
+        var client = RegistrationResponseDTO.builder()
                 .documentType("CPF")
                 .document("12345678900")
                 .name("Test User")
@@ -184,7 +185,7 @@ public class CashOperationsServiceImplTest {
         );
 
         // Setup your mocks to simulate validation failure
-        var client = RegistrationResquestDTO.builder()
+        var client = RegistrationResponseDTO.builder()
                 .documentType("CPF")
                 .document("12345678900")
                 .name("Test User")

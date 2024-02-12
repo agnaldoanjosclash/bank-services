@@ -1,18 +1,17 @@
 package com.home.account.service.impl;
 
 import com.home.account.data.dto.AccountResponseDTO;
-import com.home.account.data.dto.RegistrationResquestDTO;
+import com.home.account.data.dto.RegistrationResponseDTO;
 import com.home.account.data.enums.AccountStatus;
 import com.home.account.data.enums.DocumentType;
 import com.home.account.data.model.Account;
 import com.home.account.repository.AccountRepository;
 import com.home.account.service.ExternalIntegrationService;
+import com.home.account.service.RegisterDataService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+
 class RegisterDataServiceImplTest {
 
     @Mock
@@ -33,22 +32,25 @@ class RegisterDataServiceImplTest {
     @Mock
     private ExternalIntegrationService externalIntegrationService;
 
-    @InjectMocks
-    private RegisterDataServiceImpl service;
+    private RegisterDataService service;
 
     private Account account;
-    private RegistrationResquestDTO registrationRequestDTO;
+    private RegistrationResponseDTO registrationResponseDTO;
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        this.service = new RegisterDataServiceImpl(accountRepository, externalIntegrationService);
+
         account = new Account(1L, "1234", "567890", "12345678901", DocumentType.CPF, 1000.0, AccountStatus.ACTIVE, 0.0, LocalDateTime.now());
-        registrationRequestDTO = RegistrationResquestDTO.builder().name("John Doe").document("12345678901").documentType("CPF").failService(false).build();
+        registrationResponseDTO = RegistrationResponseDTO.builder().name("John Doe").document("12345678901").documentType("CPF").build();
     }
 
     @Test
     void whenFindAccountDetailsExists_thenSuccess() {
         when(accountRepository.findByAgencyAndAccountNumberAndClientDocumentAndTipoDocumento("1234", "567890", "12345678901", DocumentType.CPF)).thenReturn(account);
-        when(externalIntegrationService.findClientDetails(any(), any())).thenReturn(registrationRequestDTO);
+        when(externalIntegrationService.findClientDetails(any(), any())).thenReturn(registrationResponseDTO);
 
         AccountResponseDTO result = service.findAccountDetails("567890", "1234", "12345678901", DocumentType.CPF);
 
@@ -87,8 +89,8 @@ class RegisterDataServiceImplTest {
     @Test
     void whenExternalServiceFails_thenFailMessage() {
         when(accountRepository.findByAgencyAndAccountNumberAndClientDocumentAndTipoDocumento(anyString(), anyString(), anyString(), any())).thenReturn(account);
-        registrationRequestDTO.setFailService(true);
-        when(externalIntegrationService.findClientDetails(anyString(), anyString())).thenReturn(registrationRequestDTO);
+        registrationResponseDTO.setFailService(true);
+        when(externalIntegrationService.findClientDetails(anyString(), anyString())).thenReturn(registrationResponseDTO);
 
         AccountResponseDTO result = service.findAccountDetails("567890", "1234", "12345678901", DocumentType.CPF);
 
