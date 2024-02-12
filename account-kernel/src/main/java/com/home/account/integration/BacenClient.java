@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface BacenClient {
 
     @PostMapping("/bacen/registro/transferencias")
-    ResponseEntity<RegistrationResquestDTO> transferRegistration(@RequestBody final TransferResponseDTO transferResponseDTO);
+    ResponseEntity transferRegistration(@RequestBody final TransferResponseDTO transferResponseDTO);
 }

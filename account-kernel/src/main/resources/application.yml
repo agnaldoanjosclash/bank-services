@@ -34,10 +34,27 @@ management:
   health:
     circuitbreakers:
       enabled: true
+    ratelimiters:
+      enabled: true
 resilience4j:
+  ratelimiter:
+    instances:
+      bacen-rate-limiter:
+        limit-for-period: 10
+        limit-refresh-period: 1s
+        timeout-duration: 1s
   circuitbreaker:
     instances:
-      registry-service:
+      registry-circuit-breaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 7
+        failure-rate-threshold: 30
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 20ms
+        permitted-number-of-calls-in-half-open-state: 2
+        register-health-indicator: true
+      bacen-circuit-breaker:
         sliding-window-type: COUNT_BASED
         sliding-window-size: 7
         failure-rate-threshold: 30

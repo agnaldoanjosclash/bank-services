@@ -12,6 +12,8 @@ import com.home.account.repository.ClientRepository;
 import com.home.account.repository.VersionRepository;
 import com.home.account.service.ExternalIntegrationService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -36,7 +38,7 @@ public class ExternalIntegrationServiceImpl implements ExternalIntegrationServic
 
     @Override
     @Cacheable(value = CacheConfiguration.CLIENT_CACHE , key="{#document, #type}")
-    @CircuitBreaker(name="registry-service", fallbackMethod = "fallbackMethod")
+    @CircuitBreaker(name="registry-circuit-breaker", fallbackMethod = "fallbackMethod")
     public RegistrationResquestDTO findClientDetails(String document, String type) {
 
         var clientCache =  clientRepository.findByDocument(document);
@@ -59,15 +61,12 @@ public class ExternalIntegrationServiceImpl implements ExternalIntegrationServic
     }
 
     @Override
+    @CircuitBreaker(name="bacen-circuit-breaker", fallbackMethod = "bacenCircuitBreakerFallbackMethod")
+    @RateLimiter(name = "bacen-rate-limiter", fallbackMethod = "bacenRateLimiterFallbackMethod")
     public boolean bacenRegister(TransferResponseDTO transferResponseDTO) {
-        try {
-            bacenClient.transferRegistration(transferResponseDTO);
-        } catch (Exception e) {
-            log.error("Error occurred during registration in BACEN.", e);
-            log.error("Transaction Id {}", transferResponseDTO.getTransactionId());
-            kafkaTemplate.send(KafkaConfiguration.BACEN_REGISTRATION_TOPIC, transferResponseDTO);
-            return false;
-        }
+
+        bacenClient.transferRegistration(transferResponseDTO);
+
         return true;
     }
 
@@ -95,5 +94,19 @@ public class ExternalIntegrationServiceImpl implements ExternalIntegrationServic
                 .failMessage("System unavailable at the moment. Try again later.")
                 .failService(true)
                 .build();
+    }
+
+    public boolean bacenRateLimiterFallbackMethod(TransferResponseDTO transferResponseDTO, RequestNotPermitted e) {
+        log.error("Não foi possível notificar o BACEN devido a limitação de taxa. Sua transação será reprocessada.", e);
+        log.error("Transaction Id {}", transferResponseDTO.getTransactionId());
+        kafkaTemplate.send(KafkaConfiguration.BACEN_REGISTRATION_TOPIC, transferResponseDTO);
+        return false;
+    }
+
+    public boolean bacenCircuitBreakerFallbackMethod(TransferResponseDTO transferResponseDTO, Exception e) {
+        log.error("Não foi possível notificar o BACEN devido a uma falha no serviço. Sua transação será reprocessada.", e);
+        log.error("Transaction Id {}", transferResponseDTO.getTransactionId());
+        kafkaTemplate.send(KafkaConfiguration.BACEN_REGISTRATION_TOPIC, transferResponseDTO);
+        return false;
     }
 }
