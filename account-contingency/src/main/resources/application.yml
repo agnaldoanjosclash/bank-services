@@ -1,0 +1,45 @@
+server:
+  port: 8090
+
+client:
+  url: http://localhost:8091
+  kafka-host: 127.0.0.1:9092
+  feign:
+    bacen:
+      url: http://localhost:58080
+
+spring:
+  datasource:
+    url: ${URL_DB:jdbc:postgresql://localhost:5432/bank}
+    username: ${USER_NAME:postgres}
+    password: ${PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    circuitbreakers:
+      enabled: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      registry-service:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 7
+        failure-rate-threshold: 30
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 20ms
+        permitted-number-of-calls-in-half-open-state: 2
+        register-health-indicator: true
